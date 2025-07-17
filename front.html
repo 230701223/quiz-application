@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      background: lavender;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: #4b0082;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+    }
+
+    a {
+      background-color: #4b0082;
+      color: white;
+      padding: 15px 30px;
+      text-decoration: none;
+      font-size: 1.2em;
+      border-radius: 30px;
+      transition: 0.3s;
+    }
+
+    a:hover {
+      background-color: #6a0dad;
+    }
+
+    .bubbles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .bubble {
+      position: absolute;
+      bottom: -150px;
+      background: rgba(138, 43, 226, 0.3); /* Violet color */
+      border-radius: 50%;
+      animation: floatUp 15s infinite ease-in;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-120vh) scale(1.2);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Animated Violet Bubbles -->
+  <div class="bubbles">
+    <div class="bubble" style="left: 5%; width: 60px; height: 60px; animation-delay: 0s;"></div>
+    <div class="bubble" style="left: 15%; width: 80px; height: 80px; animation-delay: 2s;"></div>
+    <div class="bubble" style="left: 30%; width: 70px; height: 70px; animation-delay: 4s;"></div>
+    <div class="bubble" style="left: 45%; width: 100px; height: 100px; animation-delay: 1s;"></div>
+    <div class="bubble" style="left: 60%; width: 90px; height: 90px; animation-delay: 3s;"></div>
+    <div class="bubble" style="left: 75%; width: 75px; height: 75px; animation-delay: 5s;"></div>
+    <div class="bubble" style="left: 90%; width: 110px; height: 110px; animation-delay: 6s;"></div>
+  </div>
+
+  <!-- Welcome Message -->
+  <div class="container">
+    <h1>Welcome to Web Programming Quiz</h1>
+    <a href="index.html">Start Quiz</a>
+  </div>
+
+</body>
+</html>
