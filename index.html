@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Web Quiz</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f0ff;
+      display: flex;
+      justify-content: center;
+      padding: 50px 20px;
+    }
+
+    .quiz-container {
+      background: white;
+      padding: 30px;
+      max-width: 600px;
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .choice {
+      background-color: #ecf0f1;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .choice:hover {
+      background-color: #dcdde1;
+    }
+
+    .correct {
+      background-color: #2ecc71 !important;
+    }
+
+    .incorrect {
+      background-color: #e74c3c !important;
+    }
+
+    #nextBtn {
+      background-color: #6a0dad;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    #nextBtn:hover {
+      background-color: #8e44ad;
+    }
+
+    #result {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    .bubbles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .bubble {
+      position: absolute;
+      bottom: -150px;
+      background: rgba(138, 43, 226, 0.3); /* Violet color */
+      border-radius: 50%;
+      animation: floatUp 15s infinite ease-in;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-120vh) scale(1.2);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="quiz-container">
+    <h2 id="question">Loading...</h2>
+    <div id="choices"></div>
+    <button id="nextBtn">Next</button>
+    <p id="result"></p>
+  </div>
+  
+
+  <script>
+    const questions = [
+      { question: "Which tag is used to define a hyperlink in HTML?", choices: ["<a>", "<link>", "<href>", "<hyper>"], answer: "<a>" },
+      { question: "Which CSS property changes text color?", choices: ["font", "color", "text-color", "style"], answer: "color" },
+      { question: "What does HTML stand for?", choices: ["HyperText Markup Language", "HighText Markdown Language", "HyperText Machine Language", "None"], answer: "HyperText Markup Language" },
+      { question: "Which symbol is used for ID selectors in CSS?", choices: ["#", ".", "*", "&"], answer: "#" },
+      { question: "Which language is used for client-side scripting?", choices: ["PHP", "Java", "JavaScript", "Python"], answer: "JavaScript" },
+      { question: "What does DOM stand for?", choices: ["Document Object Model", "Data Object Model", "Digital Object Management", "Document Order Model"], answer: "Document Object Model" },
+      { question: "How do you include CSS in HTML?", choices: ["<css>", "<link>", "<script>", "<style>"], answer: "<link>" },
+      { question: "What is the default method in a form element?", choices: ["GET", "POST", "SUBMIT", "SEND"], answer: "GET" },
+      { question: "Which tag is used for creating a form in HTML?", choices: ["<input>", "<form>", "<data>", "<textarea>"], answer: "<form>" },
+      { question: "Which attribute is used to make a text field required?", choices: ["mandatory", "validate", "required", "check"], answer: "required" }
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    const questionEl = document.getElementById("question");
+    const choicesEl = document.getElementById("choices");
+    const nextBtn = document.getElementById("nextBtn");
+    const resultEl = document.getElementById("result");
+
+    function showQuestion() {
+      const current = questions[currentQuestionIndex];
+      questionEl.textContent = `Q${currentQuestionIndex + 1}. ${current.question}`;
+      choicesEl.innerHTML = "";
+      resultEl.textContent = "";
+
+      current.choices.forEach(choice => {
+        const div = document.createElement("div");
+        div.textContent = choice;
+        div.className = "choice";
+        div.addEventListener("click", () => checkAnswer(div, current.answer));
+        choicesEl.appendChild(div);
+      });
+    }
+
+    function checkAnswer(selectedEl, correctAnswer) {
+      const selectedAnswer = selectedEl.textContent;
+      if (selectedAnswer === correctAnswer) {
+        selectedEl.classList.add("correct");
+        resultEl.textContent = "Correct!";
+        score++;
+      } else {
+        selectedEl.classList.add("incorrect");
+        resultEl.textContent = `Wrong! Correct answer: ${correctAnswer}`;
+      }
+
+      document.querySelectorAll(".choice").forEach(el => {
+        el.style.pointerEvents = "none";
+      });
+    }
+
+    nextBtn.addEventListener("click", () => {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+        showQuestion();
+      } else {
+        showScore();
+      }
+    });
+
+    function showScore() {
+      questionEl.textContent = `Quiz Finished! Your score is ${score}/${questions.length}`;
+      choicesEl.innerHTML = "";
+      nextBtn.style.display = "none";
+      resultEl.textContent = "";
+    }
+
+    showQuestion();
+  </script>
+</body>
+</html>
